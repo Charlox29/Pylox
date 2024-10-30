@@ -1,46 +1,41 @@
-# PyloxDeck
+# Pylox
 
-**Ergonomique**, **intuitif** et **économique**, ce périphérique d'ordinateur vous offre la possibilité de pré-enregistrer des **textes** et des **raccourcis** pour les avoir **à porter de main**, **en un seul clic**.
+**Ergonomic**, **intuitive** and **economical**, this computer peripheral offers you the possibility to pre-save **texts** and **shortcuts** to have them **at hand**, **in a single click**.
 
-Conçu pour l'**impression 3D**, le projet est **facilement réalisable** et toutes les ressources sont rendues **open source**.
+Designed for **3D printing**, the project is **easily achievable** and all ressources are made **open source**.
 
-> *Ce projet n'a actuellement aucune version complète aboutie.*
+## [PyloxDeck](PyloxDeck/)
 
-## [Boîtier - PyloxDeck](Boitier/)
+### Programming
 
-BLA BLA BOITIER
+- *Put the image in the Raspberry Pi Pico (available [here](https://circuitpython.org/board/raspberry_pi_pico/))*
+- *Copy-Paste the [files](PyloxDeck/Code/) into the memory*
 
-### Programmation
+### Goals
 
-- *Mettre l'image dans le Raspberry Pi Pico*
-- *Copier-Coller les fichiers dedans*
+- Features
+  - Add mouse emulation
 
-### Design et construction
+- Accessibility
+  - Keys with relief
 
-> Objectifs à atteindre :
->
-> - Accessibilité :
->   - Touches avec du relief
->
-> - Electronique :
->   - Réalisation d'une carte PCB
->   - Hot-Swap
+- Electronic
+  - Making a PCB
+  - Hot-Swap mechanism
+  - Adding an OLED screen
 
-## [Application - PyloxDesktop](Application/)
+- 3D Models
+  - Redoing the designs on FreeCAD
 
-BLA BLA APPLI
+## [PyloxDesktop](PyloxDesktop/)
 
-> Objectifs à atteindre :
->
-> - Accessibilité :
->   - Changer le thème
+> *The application still does not have a finished version*
 
-[Lien vers youtube](youtube.com)
+### Goals
 
-# Sources
+- Finish a first functional version
+  - Create the different graphic windows
+  - Program the application
 
-Voici mes sources :
-
-- bla
-- bla
-- bla
+- Accessibility
+  - Change theme
