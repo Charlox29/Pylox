@@ -1,36 +1,53 @@
-import pkg_frames.MainFrame;
-import pkg_tasks.TaskList;
+import frames.MainFrame;
+
+import tasks.Delay;
+import tasks.Macro;
+import tasks.Mouse;
+import tasks.Task;
+import tasks.TaskList;
+import tasks.Text;
 
 import java.util.ArrayList;
+import java.util.RandomAccess;
 
 import javax.swing.JFrame;
 
+
 /**
  * @author Charles A
- * @version 10/06/2024
+ * @version 29/10/2024
  */
 public class PyloxDesktop
 {
-    private static int ROWS = 3;
-    private static int COLUMNS = 5;
+    private static final int ROWS = 3;
+    private static final int COLUMNS = 5;
 
-    private ArrayList<TaskList> aTaskLists;
+    private TaskList[][] aTaskLists;
     private String aLangage;
 
     /**
-     *
+     * Constructor of PyloxDesktop class objects
      */
     public PyloxDesktop()
     {
-        this.aTaskLists = new ArrayList<TaskList>(ROWS*COLUMNS);
-        this.aLangage = "en";
+        aTaskLists = new TaskList[ROWS][COLUMNS];
+        for (int r = 0; r < ROWS; r++) for (int c = 0; c < COLUMNS; c++) aTaskLists[r][c] = (new TaskList());
+
+        {// TEST
+            aTaskLists[1][1].add(new Text());
+            aTaskLists[1][1].add(new Macro());
+            aTaskLists[1][1].add(new Mouse());
+            aTaskLists[1][1].add(new Delay());
+        }
+
+        aLangage = "en";
 
         MainFrame vMainFrame;
 
-        switch(this.aLangage){
+        switch(aLangage){
             case "en":
             default:
-                vMainFrame = new MainFrame(ROWS, COLUMNS);
+                vMainFrame = new MainFrame(aTaskLists);
                 break;
         }
 
@@ -38,9 +55,9 @@ public class PyloxDesktop
     }
 
     /**
-     *
+     * Start the application
      */
-    public static void main (String[] args) {
-        PyloxDesktop vPD = new PyloxDesktop();
+    public static void main(String[] args) {
+        new PyloxDesktop();
     }
 }
