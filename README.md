@@ -1,5 +1,8 @@
 # Pylox
 
+[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
+[![discord](https://img.shields.io/badge/Discord-7289DA.svg)](https://discord.gg/qaSjwkR7MU)
+
 **Ergonomic**, **intuitive** and **economical**, this computer peripheral offers you the possibility to pre-save **texts** and **shortcuts** to have them **at hand**, **in a single click**.
 
 Designed for **3D printing**, the project is **easily achievable** and all ressources are made **open source**.
@@ -19,13 +22,14 @@ Designed for **3D printing**, the project is **easily achievable** and all resso
 - Accessibility
   - Keys with relief
 
-- Electronic
-  - Making a PCB
-  - Hot-Swap mechanism
-  - Adding an OLED screen
-
-- 3D Models
-  - Redoing the designs on FreeCAD
+- New case
+  - Electronic
+    - Hot-Swap mechanism
+    - Adding an OLED screen
+    - Making a PCB
+  
+  - 3D Models
+    - Redoing the designs on FreeCAD
 
 ## [PyloxDesktop](PyloxDesktop/)
 
