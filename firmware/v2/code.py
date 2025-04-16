@@ -4,7 +4,6 @@
 import digitalio
 import board
 import time
-import busio
 import usb_cdc
 
 
@@ -73,8 +72,6 @@ def receive_message():
     if usb_cdc.data.in_waiting > 0:
         return usb_cdc.data.read(usb_cdc.data.in_waiting).decode('utf-8').strip()
     return None
-
-
 
 # LOOP
 while True:
