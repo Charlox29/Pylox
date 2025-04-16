@@ -1,20 +1,11 @@
 #coding: utf-8
 
-#https://circuitpython.readthedocs.io/projects/hid/en/latest/api.html
-
-#https://circuitpython.readthedocs.io/projects/hid/en/latest/examples.html#keyboard-shortcuts
-#https://circuitpython.readthedocs.io/projects/hid/en/latest/_modules/adafruit_hid/keycode.html
-
-
-
 # LIBRARIES
 import digitalio
 import board
 import time
 import usb_hid
-import busio
 import json
-import storage
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.mouse import Mouse
 from adafruit_hid.consumer_control import ConsumerControl
@@ -26,7 +17,7 @@ import library
 
 # PHYSICAL COMPONENTS SETUP
 columns = [board.GP17,board.GP18,board.GP19,board.GP20,board.GP21]
-raws = [board.GP22,board.GP26,board.GP27]
+rows = [board.GP22,board.GP26,board.GP27]
 
 encoder = {"CLK":board.GP11,"DT":board.GP12,"SW":board.GP13}
 clkLast = None
@@ -40,9 +31,9 @@ for column in range(len(columns)):
     columns[column].direction = digitalio.Direction.INPUT
     columns[column].pull = digitalio.Pull.DOWN
 
-for raw in range(len(raws)):
-    raws[raw] = digitalio.DigitalInOut(raws[raw])
-    raws[raw].direction = digitalio.Direction.OUTPUT
+for row in range(len(rows)):
+    rows[row] = digitalio.DigitalInOut(rows[row])
+    rows[row].direction = digitalio.Direction.OUTPUT
 
 
 encoder["CLK"] = digitalio.DigitalInOut(encoder["CLK"])
@@ -62,7 +53,7 @@ led.direction = digitalio.Direction.OUTPUT
 
 
 # VARIABLES SETUP
-size = len(raws)*len(columns)
+size = len(rows)*len(columns)
 
 states = ["OFF"]*size
 
@@ -75,9 +66,9 @@ def millis():
 
 def blink():
     led.value = 1
-    time.sleep(0.15)
+    time.sleep(0.075)
     led.value = 0
-    time.sleep(0.15)
+    time.sleep(0.075)
 
 
 def setupTasks(tasks:list=[]):
@@ -220,17 +211,14 @@ hidKeycodes = library.hidKeycodes(keycode)
 hidConsumerControlCodes = library.hidConsumerControlCodes(ConsumerControlCode)
 
 
-
-print(datas)
-
 # LOOP
 while True:
     # BUTTONS
-    for raw in range(len(raws)):
-        raws[raw].value = 1
+    for row in range(len(rows)):
+        rows[row].value = 1
         
         for column in range(len(columns)):
-            button = raw*len(columns)+column
+            button = row*len(columns)+column
             
             if columns[column].value:
                 if states[button] == "OFF":
@@ -247,24 +235,25 @@ while True:
                             doTasks(datas["MACROS"][button])
             
             else:
-                states[raw*len(columns)+column] = "OFF"
+                states[row*len(columns)+column] = "OFF"
         
-        raws[raw].value = 0            
+        rows[row].value = 0            
     
     
     # ENCODER ROTATION
     clkState = encoder["CLK"].value
     
     if clkLast != clkState and clkLast != None:
-        if encoder["DT"].value != clkState:
-            print("ENCODER CLOCKWISE > " + str(datas["ENCODER"]["CLOCKWISE"]))
+        if clkState == 0:
+            if encoder["DT"].value != clkState:
+                print("ENCODER CLOCKWISE > " + str(datas["ENCODER"]["CLOCKWISE"]))
+                
+                doTasks(datas["ENCODER"]["CLOCKWISE"])
             
-            doTasks(datas["ENCODER"]["CLOCKWISE"])
-        
-        else:
-            print("ENCODER ANTI CLOCKWISE > " + str(datas["ENCODER"]["ANTI CLOCKWISE"]))
-            
-            doTasks(datas["ENCODER"]["ANTI CLOCKWISE"])
+            else:
+                print("ENCODER ANTI CLOCKWISE > " + str(datas["ENCODER"]["ANTI CLOCKWISE"]))
+                
+                doTasks(datas["ENCODER"]["ANTI CLOCKWISE"])
     
     clkLast = clkState
     

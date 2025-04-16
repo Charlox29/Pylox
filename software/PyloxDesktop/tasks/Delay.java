@@ -7,7 +7,10 @@ package tasks;
  * By default, time is zero.
  *
  * @author Charles A
- * @version 29/10/2024
+ *
+ * @version 02/22/2025
+ *
+ * @see Task
  */
 public class Delay extends Task
 {
@@ -16,7 +19,7 @@ public class Delay extends Task
     private long aTime;
     
     /**
-     * Constructor of Delay class objects
+     * Constructs Delay objects.
      */
     public Delay()
     {
@@ -28,7 +31,7 @@ public class Delay extends Task
     /**
      * Time accessor
      *
-     * @return Time in milliseconds
+     * @return the time in milliseconds
      */
     public long getTime(){
         return aTime;
@@ -37,10 +40,18 @@ public class Delay extends Task
     /**
      * Time modifier
      *
-     * @param pTime Time in milliseconds
+     * @param pTime the time in milliseconds
      */
-    public void setTime(final int pTime){
+    public void setTime(final long pTime){
         aTime = pTime;
+    }
+
+    @Override public Delay clone(){
+        Delay vDelay = new Delay();
+
+        vDelay.setTime(aTime);
+
+        return vDelay;
     }
 
     @Override public String getDescription() {

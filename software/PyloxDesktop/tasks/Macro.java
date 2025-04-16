@@ -9,82 +9,94 @@ import java.util.ArrayList;
  * By default, the key list is empty.
  *
  * @author Charles A
- * @version 29/10/2024
+ *
+ * @version 02/22/2025
+ *
+ * @see Task
+ * @see ArrayList
  */
 public class Macro extends Task
 {
     private static final String TYPE = "Macro";
     
-    private ArrayList<String> aList;
+    private ArrayList<String> aKeys;
     
     /**
-     * Constructor of Macro class objects
+     * Constructs Macro objects.
      */
     public Macro()
     {
         super(TYPE);
-        
-        aList = new ArrayList<String>();
+
+        aKeys = new ArrayList<>();
     }
 
     /**
      * List accessor
      *
-     * @return List of keys
+     * @return the list of keys
      */
     public ArrayList<String> getMacro(){
-        return aList;
+        return aKeys;
     }
 
     /**
      * List modifier
      *
-     * @param pList List of keys
+     * @param pList the list of keys
      */
     public void setMacro(final ArrayList<String> pList){
-        aList = pList;
+        aKeys = pList;
     }
     
     /**
-     * Get the length of the macro
+     * Gets the length of the macro.
      *
-     * @return The number of keys the macro has
+     * @return the number of keys the macro has
      */
     public int size(){
-        return aList.size();
+        return aKeys.size();
     }
 
     /**
-     * Know if the macro contains no keys
+     * Knows if the macro contains any key.
      *
-     * @return True if the list is empty
+     * @return <code>true</code> if the macro is empty; <code>false</code> otherwise.
      */
     public boolean isEmpty(){
-        return aList.isEmpty();
+        return aKeys.isEmpty();
     }
     
     /**
-     * Add a key to the macro
+     * Adds a key to the macro.
      *
-     * @param pString The title of the key
+     * @param pString the title of the key
      */
     public void add(final String pString){
-        aList.add(pString);
+        aKeys.add(pString);
     }
 
     /**
-     * Clear all macro keys
+     * Clears all keys.
      */
     public void clear(){
-        aList.clear();
+        aKeys.clear();
+    }
+
+    @Override public Macro clone(){
+        Macro vMacro = new Macro();
+
+        vMacro.setMacro(aKeys);
+
+        return vMacro;
     }
 
     @Override public String getDescription(){
-        if (isEmpty()) return "...";
+        if (isEmpty()) return "Macro empty";
 
         StringBuilder vS = new StringBuilder();
 
-        for(String vString : aList){
+        for(String vString : aKeys){
             vS.append("<").append(vString).append("> ");
         }
 

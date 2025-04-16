@@ -8,7 +8,10 @@ package tasks;
  * /!\ This class is currently deprecated because optimal mouse movement handling has not been worked out. /!\
  *
  * @author Charles A
- * @version 29/10/2024
+ *
+ * @version 02/22/2025
+ *
+ * @see Task
  */
 public class Mouse extends Task
 {
@@ -17,13 +20,17 @@ public class Mouse extends Task
     //private ArrayList<String> aList;
     
     /**
-     * Constructor of Mouse class objects
+     * Constructs Mouse objects.
      */
     public Mouse()
     {
         super(TYPE);
         
         //aList = new ArrayList<String>();
+    }
+
+    @Override public Mouse clone() {
+        return new Mouse();
     }
 
     @Override public String getDescription(){

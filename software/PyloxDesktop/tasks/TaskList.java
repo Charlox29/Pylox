@@ -4,55 +4,59 @@ import java.util.ArrayList;
 
 
 /**
- * This class allows the best management of a task list.
+ * Allows the best management of a task list.
  * By default, the task list is empty.
  *
  * @author Charles A
- * @version 29/10/2024
  *
+ * @version 02/22/2025
  *
- * https://docs.oracle.com/javase/8/docs/api/javax/swing/DefaultListModel.html
+ * @see Task
+ * @see ArrayList
  */
 public class TaskList
 {
     private ArrayList<Task> aTasks;
 
     /**
-     * Constructor of TaskList class objects
+     * Constructs TaskList objects.
      */
     public TaskList(){
         aTasks = new ArrayList<Task>();
     }
 
     /**
-     * Get the length of the list
+     * Gets the length of the list.
      *
-     * @return The number of tasks the list has
+     * @return the number of tasks the list has
      */
     public int size(){
         return aTasks.size();
     }
 
     /**
-     * Know if the list contains no tasks
+     * Knows if the list contains any task.
      *
-     * @return True if the list is empty
+     * @return <code>true</code> if the list is empty; <code>false</code> otherwise.
      */
     public boolean isEmpty(){
         return aTasks.isEmpty();
     }
 
     /**
-     * Add a task to the list
+     * Adds a task to the list.
      *
-     * @param pTask The task to add
+     * @param pTask the task to add
      */
     public void add(final Task pTask){
         aTasks.add(pTask);
     }
     
     /**
-     * Ajouter une tâche à la liste à un certain index
+     * Adds a task to the list at a specified index.
+     *
+     * @param pIndex the index to put the task in
+     * @param pTask the task to add
      */
     public void add(final int pIndex, final Task pTask){
         aTasks.add(pIndex, pTask);
@@ -70,13 +74,6 @@ public class TaskList
      */
     public Task get(final int pIndex){
         return aTasks.get(pIndex);
-    }
-
-    /**
-     * Retirer une tâche de la liste
-     */
-    public void remove(final Task pTask){
-        aTasks.remove(pTask);
     }
 
     /**

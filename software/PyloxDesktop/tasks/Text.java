@@ -7,7 +7,10 @@ package tasks;
  * By default, the text is empty.
  *
  * @author Charles A
- * @version 29/10/2024
+ *
+ * @version 02/22/2025
+ *
+ * @see Task
  */
 public class Text extends Task
 {
@@ -16,7 +19,7 @@ public class Text extends Task
     private String aText;
     
     /**
-     * Constructor of Text class objects
+     * Construct Text objects.
      */
     public Text()
     {
@@ -28,7 +31,7 @@ public class Text extends Task
     /**
      * Text accessor
      *
-     * @return Text
+     * @return the text
      */
     public String getText(){
         return aText;
@@ -37,10 +40,18 @@ public class Text extends Task
     /**
      * Text modifier
      *
-     * @param pText Text
+     * @param pText the text
      */
     public void setText(final String pText){
         aText = pText;
+    }
+
+    @Override public Text clone(){
+        Text vText = new Text();
+
+        vText.setText(aText);
+
+        return vText;
     }
 
     @Override public String getDescription(){

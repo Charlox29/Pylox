@@ -2,40 +2,48 @@ package tasks;
 
 
 /**
+ * Allows you to describe how any task should be scheduled and behave.
  * A task is an action to be performed.
- * This abstract class allows you to describe how any task should be scheduled and behave.
  *
  * @author Charles A
- * @version 29/10/2024
+ *
+ * @version 02/22/2025
  */
 public abstract class Task
 {
     private String aTaskType;
 
     /**
-     * Constructor of Task class objects
+     * Constructs Task objects.
      *
-     * @param pTaskType Task type
+     * @param pTaskType the Task's type
      */
     public Task(final String pTaskType){
         aTaskType = pTaskType;
     }
     
     /**
-     * Get task type
+     * Gets Task's type.
      *
-     * @return Task type in upper case
+     * @return the type in upper case
      */
     public String getStringType(){
         return aTaskType.toUpperCase();
     }
 
     /**
-     * Graphical representation of the task description
+     * Represents the task description graphically.
      *
-     * @return Task description
+     * @return the description
      */
     public abstract String getDescription();
+
+    /**
+     * Clones a task.
+     *
+     * @return a task with the same properties as the one passed as a parameter
+     */
+    public abstract Task clone();
 
     @Override public String toString(){
         return getStringType() + ": " + getDescription();

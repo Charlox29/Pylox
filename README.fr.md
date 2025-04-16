@@ -1,45 +1,52 @@
 # Pylox
 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
+[![readme](https://img.shields.io/badge/lang-en-red.svg)](README.md)
+[![licence](https://img.shields.io/badge/licence-MIT-yellow.svg)](LICENSE)
 [![discord](https://img.shields.io/badge/Discord-7289DA.svg)](https://discord.gg/qaSjwkR7MU)
 
-**Ergonomique**, **intuitif** et **économique**, ce périphérique d'ordinateur vous offre la possibilité de pré-enregistrer des **textes** et des **raccourcis** pour les avoir **à porter de main**, **en un seul clic**.
+**Ergonomique**, **intuitif** et **économique**, ce périphérique d'ordinateur vous offre la possibilité de pré-enregistrer des **macros** pour les avoir **à porter de main**, **en un seul clic**.
 
-Conçu pour l'**impression 3D**, le projet est **facilement réalisable** et toutes les ressources sont rendues **open source**.
+## Table des matières
 
-## [PyloxDeck](PyloxDeck/)
+- [De quoi s'agit-il ?](#de-quoi-sagit-il-)
+- [Comment obtenir Pylox ?](#comment-obtenir-pylox)
+- [Arborescence du dépôt](#arborescence-du-dépôt)
+- [Licence](#licence)
 
-### Programmation
+## De quoi s'agit-il ?
 
-- *Mettre l'image dans le Raspberry Pi Pico (disponible [ici](https://circuitpython.org/board/raspberry_pi_pico/))*
-- *Copier-Coller les [fichiers](PyloxDeck/Code/) dans la mémoire*
+**Pylox** est un écosystème **matériel** et **logiciel** conçu pour permettre à tout·e passionné·e d'informatique d'automatiser des tâches, de lancer des macros, de contrôler des logiciels et de créer une interface tactile dédiée. Le projet englobe **PyloxDeck** et **PyloxDesktop**, qui sont respectivement le périphérique (hardware + firmware) et l'application dédiée (software).
 
-### Objectifs
+Pensé pour être simple à fabriquer, mais puissant à utiliser, Pylox est évolutif, c'est à dire que chacun.e peut **s'approprier** le projet et **exploiter** ce dont-il.elle a besoin pour développer sa propre solution.
 
-- Fonctionnalités
-  - Ajouter l'émulation de souris
+## Comment obtenir Pylox
 
-- Accessibilité
-  - Touches avec du relief
+Pour construire ce périphérique, ce dépôt met à disposition tous les outils nécessaires :
 
-- Nouveau boitier
-  - Electronique :
-    - Mécanisme Hot-Swap
-    - Ajout d'un écran OLED
-    - Réalisation d'une carte PCB
-  
-  - Modélisation 3D
-    - Refaire les designs sur FreeCAD
+- [**Hardware**](/hardware/) : Schémas électroniques, circuits, PCB, et designs 3D (Fritzing, KiCad, FreeCAD) dédiés à la fabrication du périphérique
+- [**Firmware**](/firmware/) : Codes sources (Python) pour le microcontrôleur
+- [**Software**](/software/) : Applications graphiques et logiciels (Java)
 
-## [PyloxDesktop](PyloxDesktop/)
+## Arborescence du dépôt
 
-> *L'application n'a toujours pas de version aboutie*
+```plaintext
+Pylox/
+├── README.md
+├── README.fr.md
+├── LICENSE
+├── hardware/
+│   └── PyloxDeck/
+│       ├── schematics/
+│       └── 3D/
+├── firmware/
+|   ├── v1/
+│   └── v2/
+└── software/
+    └── PyloxDesktop/
+```
 
-### Objectifs
+## Licence
 
-- Finir une première version fonctionnelle
-  - Créer les différentes fenètres graphiques
-  - Programmer l'application
+Ce projet est sous **Licence MIT**. Vous pouvez librement l'utiliser, le modifier et le redistribuer à condition de mentionner l'auteur original.
 
-- Accessibilité
-  - Changer le thème
+Pour plus d'informations, consultez le fichier [LICENSE](./LICENSE).
