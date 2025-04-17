@@ -33,7 +33,6 @@ for column in range(len(columns)):
 
 for row in range(len(rows)):
     rows[row] = digitalio.DigitalInOut(rows[row])
-    rows[row].direction = digitalio.Direction.OUTPUT
 
 
 encoder["CLK"] = digitalio.DigitalInOut(encoder["CLK"])
@@ -215,6 +214,7 @@ hidConsumerControlCodes = library.hidConsumerControlCodes(ConsumerControlCode)
 while True:
     # BUTTONS
     for row in range(len(rows)):
+        rows[row].direction = digitalio.Direction.OUTPUT
         rows[row].value = 1
         
         for column in range(len(columns)):
@@ -237,7 +237,8 @@ while True:
             else:
                 states[row*len(columns)+column] = "OFF"
         
-        rows[row].value = 0            
+        rows[row].value = 0
+        rows[row].direction = digitalio.Direction.INPUT
     
     
     # ENCODER ROTATION
