@@ -2,6 +2,7 @@ package tasks;
 
 import java.util.ArrayList;
 
+import java.io.Serializable;
 
 /**
  * Allows the best management of a task list.
@@ -9,13 +10,15 @@ import java.util.ArrayList;
  *
  * @author Charles A
  *
- * @version 02/22/2025
+ * @version 05/18/2025
  *
  * @see Task
  * @see ArrayList
  */
-public class TaskList
+public class TaskList implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     private ArrayList<Task> aTasks;
 
     /**
@@ -63,28 +66,28 @@ public class TaskList
     }
     
     /**
-     * Remplacer une tâche d'un certain indice par une autre tâche
+     * Replace a task of a certain index with another task.
      */
     public void set(final int pIndex, final Task pTask){
         aTasks.set(pIndex, pTask);
     }
     
     /**
-     * Obtenir une tâche de la liste depuis son indice
+     * Get a task from the list by its index.
      */
     public Task get(final int pIndex){
         return aTasks.get(pIndex);
     }
 
     /**
-     * Retirer une tâche de la liste
+     * Remove a task from the list.
      */
     public void remove(final int pIndex){
         aTasks.remove(pIndex);
     }
     
     /**
-     * Effacer tous les élements de la liste
+     * Clear all tasks from the list.
      */
     public void clear(){
         aTasks.clear();

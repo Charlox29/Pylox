@@ -10,13 +10,15 @@ import java.util.ArrayList;
  *
  * @author Charles A
  *
- * @version 02/22/2025
+ * @version 05/18/2025
  *
  * @see Task
  * @see ArrayList
  */
 public class Macro extends Task
 {
+    private static final long serialVersionUID = 1L;
+
     private static final String TYPE = "Macro";
     
     private ArrayList<String> aKeys;

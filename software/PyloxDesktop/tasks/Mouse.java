@@ -1,7 +1,5 @@
 package tasks;
 
-//import java.util.ArrayList;
-
 
 /**
  * Task of simulating mouse behaviors.
@@ -9,14 +7,16 @@ package tasks;
  *
  * @author Charles A
  *
- * @version 02/22/2025
+ * @version 05/18/2025
  *
  * @see Task
  */
 public class Mouse extends Task
 {
+    private static final long serialVersionUID = 1L;
+
     private static final String TYPE = "Mouse";
-    
+
     //private ArrayList<String> aList;
     
     /**

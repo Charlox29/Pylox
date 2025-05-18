@@ -3,22 +3,26 @@ import frames.MainFrame;
 import tasks.Delay;
 import tasks.Macro;
 import tasks.Mouse;
-import tasks.Task;
 import tasks.TaskList;
 import tasks.Text;
 
-import java.util.ArrayList;
-import java.util.RandomAccess;
-
 import javax.swing.JFrame;
+
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
 
 
 /**
  * @author Charles A
- * @version 29/10/2024
+ * @version 05/18/2025
  */
 public class PyloxDesktop
 {
+    private static final String SAVE_FILE = "tasks.pxd";
+
     private static final int ROWS = 3;
     private static final int COLUMNS = 5;
 
@@ -26,19 +30,31 @@ public class PyloxDesktop
     private String aLangage;
 
     /**
-     * Constructor of PyloxDesktop class objects
+     * Constructs PyloxDesktop objects.
      */
     public PyloxDesktop()
     {
-        aTaskLists = new TaskList[ROWS][COLUMNS];
-        for (int r = 0; r < ROWS; r++) for (int c = 0; c < COLUMNS; c++) aTaskLists[r][c] = (new TaskList());
+        TaskList[][] loaded = load();
 
-        {// TEST
-            aTaskLists[1][1].add(new Text());
-            aTaskLists[1][1].add(new Macro());
-            aTaskLists[1][1].add(new Mouse());
-            aTaskLists[1][1].add(new Delay());
+        if (loaded != null) {
+            aTaskLists = loaded;
+
+            System.out.println("Loaded task lists.");
+        } else {
+            aTaskLists = new TaskList[ROWS][COLUMNS];
+            for (int r = 0; r < ROWS; r++) for (int c = 0; c < COLUMNS; c++) aTaskLists[r][c] = (new TaskList());
+
+            {// TEST
+                aTaskLists[1][1].add(new Text());
+                aTaskLists[1][1].add(new Macro());
+                aTaskLists[1][1].add(new Mouse());
+                aTaskLists[1][1].add(new Delay());
+            }
+
+            System.out.println("Tasklists created");
         }
+
+
 
         aLangage = "en";
 
@@ -51,13 +67,41 @@ public class PyloxDesktop
                 break;
         }
 
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+                save(aTaskLists)
+        ));
+
         vMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
-     * Start the application
+     * Start the application.
      */
     public static void main(String[] args) {
         new PyloxDesktop();
+    }
+
+    /**
+     * Save the TaskLists to a file.
+     */
+    public static void save(TaskList[][] pTaskLists) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(SAVE_FILE))) {
+            oos.writeObject(pTaskLists);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Import the TaskLists from a file.
+     */
+    private TaskList[][] load() {
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(SAVE_FILE))) {
+            return (TaskList[][]) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
     }
 }

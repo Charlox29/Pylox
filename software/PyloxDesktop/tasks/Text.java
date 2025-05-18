@@ -8,12 +8,14 @@ package tasks;
  *
  * @author Charles A
  *
- * @version 02/22/2025
+ * @version 05/18/2025
  *
  * @see Task
  */
 public class Text extends Task
 {
+    private static final long serialVersionUID = 1L;
+
     private static final String TYPE = "Text";
     
     private String aText;

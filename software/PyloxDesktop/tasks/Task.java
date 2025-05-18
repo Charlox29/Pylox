@@ -1,5 +1,6 @@
 package tasks;
 
+import java.io.Serializable;
 
 /**
  * Allows you to describe how any task should be scheduled and behave.
@@ -7,11 +8,13 @@ package tasks;
  *
  * @author Charles A
  *
- * @version 02/22/2025
+ * @version 05/18/2025
  */
-public abstract class Task
+public abstract class Task implements Serializable
 {
-    private String aTaskType;
+    private static final long serialVersionUID = 1L;
+
+    private final String aTaskType;
 
     /**
      * Constructs Task objects.
