@@ -1,7 +1,7 @@
 import frames.MainFrame;
 
 import tasks.Delay;
-import tasks.Macro;
+import tasks.Shortcut;
 import tasks.Mouse;
 import tasks.TaskList;
 import tasks.Text;
@@ -46,7 +46,7 @@ public class PyloxDesktop
 
             {// TEST
                 aTaskLists[1][1].add(new Text());
-                aTaskLists[1][1].add(new Macro());
+                aTaskLists[1][1].add(new Shortcut());
                 aTaskLists[1][1].add(new Mouse());
                 aTaskLists[1][1].add(new Delay());
             }

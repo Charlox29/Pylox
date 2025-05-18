@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 
 /**
- * Task of executing a macro.
- * The macro is represented by a list of character strings (ArrayList of Strings), each element of which represents the label of a key.
+ * Task of executing a shortcut.
+ * The shortcut is represented by a list of character strings (ArrayList of Strings), each element of which represents the label of a key.
  * By default, the key list is empty.
  *
  * @author Charles A
@@ -15,18 +15,18 @@ import java.util.ArrayList;
  * @see Task
  * @see ArrayList
  */
-public class Macro extends Task
+public class Shortcut extends Task
 {
     private static final long serialVersionUID = 1L;
 
-    private static final String TYPE = "Macro";
+    private static final String TYPE = "Shortcut";
     
     private ArrayList<String> aKeys;
     
     /**
-     * Constructs Macro objects.
+     * Constructs Shortcut objects.
      */
-    public Macro()
+    public Shortcut()
     {
         super(TYPE);
 
@@ -38,7 +38,7 @@ public class Macro extends Task
      *
      * @return the list of keys
      */
-    public ArrayList<String> getMacro(){
+    public ArrayList<String> getKeys(){
         return aKeys;
     }
 
@@ -47,30 +47,30 @@ public class Macro extends Task
      *
      * @param pList the list of keys
      */
-    public void setMacro(final ArrayList<String> pList){
+    public void setKeys(final ArrayList<String> pList){
         aKeys = pList;
     }
     
     /**
-     * Gets the length of the macro.
+     * Gets the length of the shortcut.
      *
-     * @return the number of keys the macro has
+     * @return the number of keys the shortcut has
      */
     public int size(){
         return aKeys.size();
     }
 
     /**
-     * Knows if the macro contains any key.
+     * Knows if the shorcut contains any key.
      *
-     * @return <code>true</code> if the macro is empty; <code>false</code> otherwise.
+     * @return <code>true</code> if the shortcut is empty; <code>false</code> otherwise.
      */
     public boolean isEmpty(){
         return aKeys.isEmpty();
     }
     
     /**
-     * Adds a key to the macro.
+     * Adds a key to the shortcut.
      *
      * @param pString the title of the key
      */
@@ -85,16 +85,16 @@ public class Macro extends Task
         aKeys.clear();
     }
 
-    @Override public Macro clone(){
-        Macro vMacro = new Macro();
+    @Override public Shortcut clone(){
+        Shortcut vShortcut = new Shortcut();
 
-        vMacro.setMacro(aKeys);
+        vShortcut.setKeys(aKeys);
 
-        return vMacro;
+        return vShortcut;
     }
 
     @Override public String getDescription(){
-        if (isEmpty()) return "Macro empty";
+        if (isEmpty()) return "Shortcut empty";
 
         StringBuilder vS = new StringBuilder();
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import tasks.Task;
 import tasks.TaskList;
-import tasks.Macro;
+import tasks.Shortcut;
 import tasks.Text;
 import tasks.Mouse;
 import tasks.Delay;
@@ -209,7 +209,7 @@ public class TaskListManagerFrame extends AbstractFrame {
     private JPanel getEditorJPanel(final Task pTask){
         return switch (pTask.getStringType()) {
             case "DELAY" -> new DelayEditorPanel((Delay) pTask);
-            case "MACRO" -> new MacroEditorPanel((Macro) pTask);
+            case "SHORTCUT" -> new ShortcutEditorPanel((Shortcut) pTask);
             case "MOUSE" -> new MouseEditorPanel((Mouse) pTask);
             case "TEXT" -> new TextEditorPanel((Text) pTask);
             default -> new JPanel();
@@ -429,14 +429,14 @@ public class TaskListManagerFrame extends AbstractFrame {
 
             NewTaskButton aNewTextButton = new NewTaskButton("New Text");
             NewTaskButton aNewDelayButton = new NewTaskButton("New Delay");
-            NewTaskButton aNewMacroButton = new NewTaskButton("New Macro");
+            NewTaskButton aNewShortcutButton = new NewTaskButton("New Shortcut");
             NewTaskButton aNewMouseButton = new NewTaskButton("New Mouse");
 
             aNewTextButton.addActionListener(e -> aList.add(new Text()));
 
             aNewDelayButton.addActionListener(e -> aList.add(new Delay()));
 
-            aNewMacroButton.addActionListener(e -> aList.add(new Macro()));
+            aNewShortcutButton.addActionListener(e -> aList.add(new Shortcut()));
 
             aNewMouseButton.addActionListener(e -> aList.add(new Mouse()));
 
@@ -464,9 +464,9 @@ public class TaskListManagerFrame extends AbstractFrame {
                                     aNewDelayButton.getPreferredSize().width,
                                     Short.MAX_VALUE)
 
-                            .addComponent(aNewMacroButton,
-                                    aNewMacroButton.getMinimumSize().width,
-                                    aNewMacroButton.getPreferredSize().width,
+                            .addComponent(aNewShortcutButton,
+                                    aNewShortcutButton.getMinimumSize().width,
+                                    aNewShortcutButton.getPreferredSize().width,
                                     Short.MAX_VALUE)
 
                             .addComponent(aNewMouseButton,
@@ -495,10 +495,10 @@ public class TaskListManagerFrame extends AbstractFrame {
 
                     .addContainerGap(5, Short.MAX_VALUE)
 
-                    .addComponent(aNewMacroButton,
-                            aNewMacroButton.getMinimumSize().height,
-                            aNewMacroButton.getPreferredSize().height,
-                            aNewMacroButton.getMaximumSize().height)
+                    .addComponent(aNewShortcutButton,
+                            aNewShortcutButton.getMinimumSize().height,
+                            aNewShortcutButton.getPreferredSize().height,
+                            aNewShortcutButton.getMaximumSize().height)
 
                     .addContainerGap(5, Short.MAX_VALUE)
 
@@ -638,11 +638,11 @@ public class TaskListManagerFrame extends AbstractFrame {
     }
 
     /**
-     * The MacroEditorPanel provides a graphical interface for editing Macro tasks.
+     * The ShortcutEditorPanel provides a graphical interface for editing Shortcut tasks.
      *
      * @see TaskEditorPanel
      */
-    private static class MacroEditorPanel extends TaskEditorPanel<Macro> implements ActionListener, KeyListener
+    private static class ShortcutEditorPanel extends TaskEditorPanel<Shortcut> implements ActionListener, KeyListener
     {
         private boolean aIsRecording;
         private ArrayList<String> aKeys;
@@ -651,16 +651,16 @@ public class TaskListManagerFrame extends AbstractFrame {
 
 
         /**
-         * Constructs MacroEditorPanel objects.
+         * Constructs ShortcutEditorPanel objects.
          *
-         * @param pMacro the Macro task to edit
+         * @param pShortcut the Shortcut task to edit
          */
-        public MacroEditorPanel(final Macro pMacro)
+        public ShortcutEditorPanel(final Shortcut pShortcut)
         {
-            super(pMacro);
+            super(pShortcut);
 
             aIsRecording = false;
-            aKeys = pMacro.getMacro();
+            aKeys = pShortcut.getKeys();
 
             aButton = new JButton(getTask().getDescription());
             aButton.addActionListener(this);
@@ -689,8 +689,8 @@ public class TaskListManagerFrame extends AbstractFrame {
 
         @Override public void saveTask()
         {
-            //getTask().setMacro(aIsRecording ? aKeys : null);
-            getTask().setMacro(aKeys);
+            //getTask().setKeys(aIsRecording ? aKeys : null);
+            getTask().setKeys(aKeys);
         }
 
         @Override public void actionPerformed(ActionEvent pE)
