@@ -35,12 +35,15 @@ Pylox/
 ├── README.fr.md
 ├── LICENSE
 ├── hardware/
-│   └── PyloxDeck/
-│       ├── schematics/
+│   ├── PyloxDeck/
+│   │   ├── schematics/
+│   │   └── 3D/
+│   └── PyloxDeck+/
 │       └── 3D/
 ├── firmware/
 |   ├── v1/
-│   └── v2/
+|   ├── v2/
+│   └── v2.1/
 └── software/
     └── PyloxDesktop/
 ```
