@@ -1,18 +1,17 @@
 import frames.MainFrame;
 
-import tasks.Delay;
-import tasks.Shortcut;
-import tasks.Mouse;
-import tasks.TaskList;
-import tasks.Text;
+import tasks.*;
+
+import utils.Cookies;
+import utils.Profile;
+import utils.Serial;
 
 import javax.swing.JFrame;
 
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
+import java.time.LocalTime;
+
+import static utils.Data.load;
+import static utils.Data.save;
 
 
 /**
@@ -21,10 +20,18 @@ import java.io.IOException;
  */
 public class PyloxDesktop
 {
-    private static final String SAVE_FILE = "tasks.pxd";
+    private static final String COOKIES_FILE = "cookies.pxd";
+
+    private Cookies aCookies;
+
+    private Profile aProfile;
+
+
 
     private static final int ROWS = 3;
     private static final int COLUMNS = 5;
+
+    private static final String PORT = "COM7";
 
     private TaskList[][] aTaskLists;
     private String aLangage;
@@ -34,12 +41,20 @@ public class PyloxDesktop
      */
     public PyloxDesktop()
     {
-        TaskList[][] loaded = load();
+        aCookies = (Cookies) load(COOKIES_FILE);
+
+        if (aCookies == null){
+            aCookies = new Cookies();
+        }
+
+        aProfile = aCookies.getProfile();
+
+        /*TaskList[][] loaded = load();
 
         if (loaded != null) {
             aTaskLists = loaded;
 
-            System.out.println("Loaded task lists.");
+            //System.out.println("Loaded task lists.");
         } else {
             aTaskLists = new TaskList[ROWS][COLUMNS];
             for (int r = 0; r < ROWS; r++) for (int c = 0; c < COLUMNS; c++) aTaskLists[r][c] = (new TaskList());
@@ -51,10 +66,10 @@ public class PyloxDesktop
                 aTaskLists[1][1].add(new Delay());
             }
 
-            System.out.println("Tasklists created");
-        }
+            //System.out.println("Tasklists created");
+        }*/
 
-
+        aTaskLists = aProfile.getTaskLists();
 
         aLangage = "en";
 
@@ -63,15 +78,72 @@ public class PyloxDesktop
         switch(aLangage){
             case "en":
             default:
-                vMainFrame = new MainFrame(aTaskLists);
+                vMainFrame = new MainFrame(aCookies);
                 break;
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
-                save(aTaskLists)
+                save(aCookies, COOKIES_FILE)
         ));
 
         vMainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        SerialExecuter(aTaskLists).start();
+    }
+
+    private Thread SerialExecuter(final TaskList[][] pTaskLists) {
+        Thread watcher = new Thread(() -> {
+            while (true) {
+                if (!Serial.isOpened()) {
+                    if (!Serial.open(PORT)) {
+                        try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
+                        continue;
+                    }
+                    Serial.clearInput();
+                    System.out.println("Port " + PORT + " ouvert avec succès");
+                }
+                
+                try {
+                    while (Serial.isOpened()) {
+                        if (Serial.available()) {
+                            String message = Serial.read();
+                            if (message != null) {
+                                System.out.println(LocalTime.now() + " - " + PORT + " : " + message);
+
+                                String[] vTokens = message.split("\\.");
+                                //System.out.printf("%s %s %s\n", vTokens[0], vTokens[1], vTokens[2]);
+
+                                switch (vTokens[0]) {
+                                    case "enc":
+                                        break;
+                                    case "but":
+                                        try {
+                                            int nb =  Integer.parseInt(vTokens[1]);
+                                            int row = nb / COLUMNS;
+                                            int column = nb % COLUMNS;
+
+                                            aTaskLists[row][column].executeAll();
+                                        }
+                                        catch (NumberFormatException e) {
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        try { Thread.sleep(5); } catch (InterruptedException ignored) {}
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    Serial.close();
+                }
+            }
+        }, "SerialExecuterThread");
+
+        watcher.setDaemon(true);
+        return watcher;
     }
 
     /**
@@ -81,27 +153,5 @@ public class PyloxDesktop
         new PyloxDesktop();
     }
 
-    /**
-     * Save the TaskLists to a file.
-     */
-    public static void save(TaskList[][] pTaskLists) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(SAVE_FILE))) {
-            oos.writeObject(pTaskLists);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * Import the TaskLists from a file.
-     */
-    private TaskList[][] load() {
-        try (ObjectInputStream ois = new ObjectInputStream(
-                new FileInputStream(SAVE_FILE))) {
-            return (TaskList[][]) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            return null;
-        }
-    }
 }

@@ -56,6 +56,14 @@ public class Delay extends Task
         return vDelay;
     }
 
+    @Override public void execute() {
+        try{
+            Thread.sleep(aTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override public String getDescription() {
         return aTime + "ms";
     }

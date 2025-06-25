@@ -1,6 +1,12 @@
 package tasks;
 
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.KeyEvent;
+
 /**
  * Task of writing a text.
  * The text is represented by a String.
@@ -54,6 +60,38 @@ public class Text extends Task
         vText.setText(aText);
 
         return vText;
+    }
+
+    @Override public void execute(){
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+            boolean isMac = os.contains("mac");
+            int modifierKey = isMac ? KeyEvent.VK_META : KeyEvent.VK_CONTROL;
+
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable clipboardBackup = clipboard.getContents(null);
+
+            StringSelection newContent = new StringSelection(aText);
+            clipboard.setContents(newContent, null);
+
+            Robot robot = new Robot();
+            robot.setAutoDelay(10);
+
+            robot.keyPress(modifierKey);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_V);
+            robot.keyRelease(modifierKey);
+
+            // USEFULL ????
+            Thread.sleep(100);
+
+            if (clipboardBackup != null) {
+                clipboard.setContents(clipboardBackup, null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override public String getDescription(){

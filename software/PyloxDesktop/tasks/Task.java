@@ -48,6 +48,13 @@ public abstract class Task implements Serializable
      */
     public abstract Task clone();
 
+    /**
+     * Performs the task.
+     */
+    public void execute() {
+        System.out.println("Execute " + toString());
+    }
+
     @Override public String toString(){
         return getStringType() + ": " + getDescription();
     }

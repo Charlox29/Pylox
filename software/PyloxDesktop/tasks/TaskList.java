@@ -66,31 +66,40 @@ public class TaskList implements Serializable
     }
     
     /**
-     * Replace a task of a certain index with another task.
+     * Replaces a task of a certain index with another task.
      */
     public void set(final int pIndex, final Task pTask){
         aTasks.set(pIndex, pTask);
     }
     
     /**
-     * Get a task from the list by its index.
+     * Gets a task from the list by its index.
      */
     public Task get(final int pIndex){
         return aTasks.get(pIndex);
     }
 
     /**
-     * Remove a task from the list.
+     * Removes a task from the list.
      */
     public void remove(final int pIndex){
         aTasks.remove(pIndex);
     }
     
     /**
-     * Clear all tasks from the list.
+     * Clears all tasks from the list.
      */
     public void clear(){
         aTasks.clear();
+    }
+
+    /**
+     * Performs all tasks.
+     */
+    public void executeAll() {
+        for(Task pTask : aTasks){
+            pTask.execute();
+        }
     }
 
     @Override public String toString(){

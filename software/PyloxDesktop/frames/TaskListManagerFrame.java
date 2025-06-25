@@ -645,7 +645,7 @@ public class TaskListManagerFrame extends AbstractFrame {
     private static class ShortcutEditorPanel extends TaskEditorPanel<Shortcut> implements ActionListener, KeyListener
     {
         private boolean aIsRecording;
-        private ArrayList<String> aKeys;
+        private ArrayList<Integer> aKeys;
 
         private final JButton aButton;
 
@@ -662,7 +662,7 @@ public class TaskListManagerFrame extends AbstractFrame {
             aIsRecording = false;
             aKeys = pShortcut.getKeys();
 
-            aButton = new JButton(getTask().getDescription());
+            aButton = new JButton(getShortcutText());
             aButton.addActionListener(this);
             aButton.setFocusPainted(false);
 
@@ -687,6 +687,17 @@ public class TaskListManagerFrame extends AbstractFrame {
             );
         }
 
+        private String getShortcutText() {
+            if (aKeys.isEmpty()) return "Shortcut empty";
+            StringBuilder sb = new StringBuilder();
+            for (int key : aKeys) {
+                sb.append(KeyEvent.getKeyText(key)).append(" + ");
+            }
+            // Retirer le dernier " + "
+            if (sb.length() > 3) sb.setLength(sb.length() - 3);
+            return sb.toString();
+        }
+
         @Override public void saveTask()
         {
             //getTask().setKeys(aIsRecording ? aKeys : null);
@@ -705,7 +716,7 @@ public class TaskListManagerFrame extends AbstractFrame {
                 aIsRecording = true;
             }
             else{
-                aButton.setText(getTask().getDescription());
+                aButton.setText(getShortcutText());
 
                 aButton.removeKeyListener(this);
 
@@ -719,12 +730,12 @@ public class TaskListManagerFrame extends AbstractFrame {
         @Override
         public void keyPressed(KeyEvent pE)
         {
-            String vKey = KeyEvent.getKeyText(pE.getKeyCode());
+            int vKey = pE.getKeyCode();
 
             if (!aKeys.contains(vKey)) {
                 aKeys.add(vKey);
 
-                aButton.setText(getTask().getDescription());
+                aButton.setText(getShortcutText());
             }
         }
 
@@ -733,7 +744,7 @@ public class TaskListManagerFrame extends AbstractFrame {
         {
             saveTask();
 
-            aButton.setText("Saved: " + getTask().getDescription());
+            aButton.setText("Saved: " + getShortcutText());
 
             aButton.removeKeyListener(this);
 

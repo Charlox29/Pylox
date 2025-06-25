@@ -1,11 +1,13 @@
 package tasks;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 
 /**
  * Task of executing a shortcut.
- * The shortcut is represented by a list of character strings (ArrayList of Strings), each element of which represents the label of a key.
+ * The shortcut is represented by a list of integers (ArrayList of Integer), each element of which represents a key.
  * By default, the key list is empty.
  *
  * @author Charles A
@@ -14,6 +16,7 @@ import java.util.ArrayList;
  *
  * @see Task
  * @see ArrayList
+ * @see java.awt.event.KeyEvent
  */
 public class Shortcut extends Task
 {
@@ -21,7 +24,7 @@ public class Shortcut extends Task
 
     private static final String TYPE = "Shortcut";
     
-    private ArrayList<String> aKeys;
+    private ArrayList<Integer> aKeys;
     
     /**
      * Constructs Shortcut objects.
@@ -38,7 +41,7 @@ public class Shortcut extends Task
      *
      * @return the list of keys
      */
-    public ArrayList<String> getKeys(){
+    public ArrayList<Integer> getKeys(){
         return aKeys;
     }
 
@@ -47,7 +50,7 @@ public class Shortcut extends Task
      *
      * @param pList the list of keys
      */
-    public void setKeys(final ArrayList<String> pList){
+    public void setKeys(final ArrayList<Integer> pList){
         aKeys = pList;
     }
     
@@ -72,10 +75,10 @@ public class Shortcut extends Task
     /**
      * Adds a key to the shortcut.
      *
-     * @param pString the title of the key
+     * @param pInt the code of the key
      */
-    public void add(final String pString){
-        aKeys.add(pString);
+    public void add(final int pInt){
+        aKeys.add(pInt);
     }
 
     /**
@@ -93,13 +96,33 @@ public class Shortcut extends Task
         return vShortcut;
     }
 
+    @Override
+    public void execute() {
+        if (aKeys.isEmpty()) return;
+        try {
+            Robot robot = new Robot();
+            robot.setAutoDelay(20);
+
+            // Appuyer sur toutes les touches dans l'ordre
+            for (int key : aKeys) {
+                robot.keyPress(key);
+            }
+            // Relâcher toutes les touches dans l'ordre inverse
+            for (int i = aKeys.size() - 1; i >= 0; i--) {
+                robot.keyRelease(aKeys.get(i));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override public String getDescription(){
         if (isEmpty()) return "Shortcut empty";
 
         StringBuilder vS = new StringBuilder();
 
-        for(String vString : aKeys){
-            vS.append("<").append(vString).append("> ");
+        for(int vInt : aKeys){
+            vS.append("<").append(vInt).append("> ");
         }
 
         return vS.toString().trim();
